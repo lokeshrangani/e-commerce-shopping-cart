@@ -145,7 +145,7 @@ Tables:
 
 Each log includes optional meta JSON
 
-### To run tests:
+### Testing:
 
 ```bash
 php artisan test
