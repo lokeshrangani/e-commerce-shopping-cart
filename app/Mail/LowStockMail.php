@@ -27,7 +27,7 @@ class LowStockMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "Action Required: " . $this->product->name . " Is Running Low In Stock",
+            subject: 'Action Required: '.$this->product->name.' Is Running Low In Stock',
         );
     }
 

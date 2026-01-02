@@ -67,10 +67,10 @@ class CartService
     {
         $item = CartItem::query()
             ->where('id', $itemId)
-            ->whereHas('cart', fn($q) => $q->where('user_id', $user->id))
+            ->whereHas('cart', fn ($q) => $q->where('user_id', $user->id))
             ->first();
 
-        if (!$item) {
+        if (! $item) {
             throw new \Exception('Item not found in cart');
         }
 
@@ -86,6 +86,7 @@ class CartService
             );
 
             $item->delete();
+
             return;
         }
 
@@ -106,10 +107,10 @@ class CartService
     {
         $item = CartItem::query()
             ->where('id', $itemId)
-            ->whereHas('cart', fn($q) => $q->where('user_id', $user->id))
+            ->whereHas('cart', fn ($q) => $q->where('user_id', $user->id))
             ->first();
 
-        if (!$item) {
+        if (! $item) {
             throw new \Exception('Item not found in cart');
         }
 

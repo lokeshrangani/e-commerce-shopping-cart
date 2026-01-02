@@ -8,8 +8,8 @@ use App\Service\CartService;
 use App\Service\OrderService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Livewire\Component;
 use Livewire\Attributes\Title;
+use Livewire\Component;
 
 #[Title('Shop')]
 class ShopPage extends Component
@@ -30,7 +30,7 @@ class ShopPage extends Component
             (new CartService)->addProduct(Auth::user(), $productId);
             $this->refreshCart();
         } catch (\Exception $e) {
-            Log::error('Error adding product to cart: ' . $e->getMessage());
+            Log::error('Error adding product to cart: '.$e->getMessage());
             $this->dispatch('show-alert', message: $e->getMessage());
         }
     }
@@ -40,7 +40,7 @@ class ShopPage extends Component
         try {
             (new CartService)->decrementQuantity(Auth::user(), $productId);
         } catch (\Exception $e) {
-            Log::error('Error decrementing quantity: ' . $e->getMessage());
+            Log::error('Error decrementing quantity: '.$e->getMessage());
             $this->dispatch('show-alert', message: 'Error decrementing quantity');
         }
     }
@@ -56,10 +56,10 @@ class ShopPage extends Component
             $order = (new OrderService)->checkout(Auth::user());
             $this->dispatch('show-alert', message: "Order {$order->id} created successfully");
         } catch (InsufficientStockException $e) {
-            Log::error('Insufficient stock: ' . $e->getMessage());
+            Log::error('Insufficient stock: '.$e->getMessage());
             $this->dispatch('show-alert', message: $e->getMessage());
         } catch (\Exception $e) {
-            Log::error('Error during checkout: ' . $e->getMessage());
+            Log::error('Error during checkout: '.$e->getMessage());
             $this->dispatch('show-alert', message: 'Error during checkout');
         }
     }

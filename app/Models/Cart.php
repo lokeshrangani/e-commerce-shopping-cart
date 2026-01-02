@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Collection;
 
 /**
  * @property-read float $total
@@ -28,7 +28,7 @@ class Cart extends Model
     public function getTotalAttribute(): float
     {
         return $this->items
-            ->map(fn($item) => $item->subtotal)
+            ->map(fn ($item) => $item->subtotal)
             ->sum();
     }
 }

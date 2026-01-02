@@ -24,7 +24,7 @@ class CartTest extends TestCase
             'low_stock_threshold' => 2,
         ]);
 
-        $cartService = new CartService();
+        $cartService = new CartService;
         $cartService->addProduct($user, $product->id, 1);
 
         $this->assertDatabaseHas('cart_items', [
@@ -44,7 +44,7 @@ class CartTest extends TestCase
         $user = User::factory()->create();
         $product = Product::factory()->create(['stock_quantity' => 2]);
 
-        $cartService = new CartService();
+        $cartService = new CartService;
         $cartService->addProduct($user, $product->id, 1);
         $this->assertEquals(1, $user->cart->items()->first()->quantity);
 
@@ -60,7 +60,7 @@ class CartTest extends TestCase
         $user = User::factory()->create();
         $product = Product::factory()->create(['stock_quantity' => 5]);
 
-        $cartService = new CartService();
+        $cartService = new CartService;
         $cartService->addProduct($user, $product->id, 1);
 
         $cartService->decrementQuantity($user, $user->cart->items()->first()->id, 5);

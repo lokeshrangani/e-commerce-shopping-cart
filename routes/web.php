@@ -21,9 +21,9 @@ Route::view('dashboard', 'dashboard')
 Route::middleware(['auth'])->group(function () {
     Route::get('preview-daily-sales-email/{date}', function () {
         $date = \Carbon\Carbon::parse(request('date', now()))->toDateString();
-        $orders = (new \App\Service\OrderService)->getOrdersByDate($date);
+        $salesData = (new \App\Service\DailySalesCsvService)->prepareDailySalesData($date);
 
-        return view('emails.daily-sales', ['orders' => $orders, 'total' => $orders->sum('total_amount'), 'orderCount' => $orders->count(), 'date' => $date]);
+        return view('emails.daily-sales', [...$salesData]);
     });
 
     Route::get('preview-low-stock-email/{productId}', function () {
@@ -31,6 +31,8 @@ Route::middleware(['auth'])->group(function () {
 
         return view('emails.low-stock', ['product' => $product]);
     });
+
+    Route::get('/downloads/reports/{filename}', [\App\Service\DailySalesCsvService::class, 'download'])->name('reports.download');
 
     Route::redirect('settings', 'settings/profile');
     Route::get('activity', ActivityLog::class)->name('activity');

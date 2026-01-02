@@ -21,10 +21,10 @@ class OrderTest extends TestCase
         $user = User::factory()->create();
         $product = Product::factory()->create(['stock_quantity' => 5]);
 
-        $cartService = new CartService();
+        $cartService = new CartService;
         $cartService->addProduct($user, $product->id, 2);
 
-        $orderService = new OrderService();
+        $orderService = new OrderService;
         $order = $orderService->checkout($user);
 
         $this->assertDatabaseHas('orders', [
@@ -50,10 +50,10 @@ class OrderTest extends TestCase
         $user = User::factory()->create();
         $product = Product::factory()->create(['stock_quantity' => 1]);
 
-        $cartService = new CartService();
+        $cartService = new CartService;
         $cartService->addProduct($user, $product->id, 2); // Should fail
 
-        $orderService = new OrderService();
+        $orderService = new OrderService;
         $orderService->checkout($user->id);
     }
 
@@ -64,10 +64,10 @@ class OrderTest extends TestCase
         $user = User::factory()->create();
         $product = Product::factory()->create(['stock_quantity' => 5, 'low_stock_threshold' => 3]);
 
-        $cartService = new CartService();
+        $cartService = new CartService;
         $cartService->addProduct($user, $product->id, 3);
 
-        $orderService = new OrderService();
+        $orderService = new OrderService;
         $orderService->checkout($user);
 
         Queue::assertPushed(LowStockJob::class);

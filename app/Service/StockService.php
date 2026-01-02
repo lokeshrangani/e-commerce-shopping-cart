@@ -3,8 +3,8 @@
 namespace App\Service;
 
 use App\Exceptions\InsufficientStockException;
-use App\Models\Product;
 use App\Jobs\LowStockJob;
+use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 
 class StockService
@@ -15,7 +15,7 @@ class StockService
             $product = Product::lockForUpdate()->findOrFail($productId);
 
             if ($product->stock_quantity < $qty) {
-                throw new InsufficientStockException("Insufficient stock", 422);
+                throw new InsufficientStockException('Insufficient stock', 422);
             }
 
             $product->decrement('stock_quantity', $qty);

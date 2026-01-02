@@ -8,7 +8,6 @@ use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 

@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\DB;
 class OrderService
 {
     public function __construct(
-        protected CartService $cartService = new CartService(),
-        protected StockService $stockService = new StockService(),
+        protected CartService $cartService = new CartService,
+        protected StockService $stockService = new StockService,
     ) {}
 
     public function checkout(User $user): Order
@@ -22,8 +22,8 @@ class OrderService
 
             $cart = $this->cartService->getCart($user);
 
-            if (!$cart || $cart->items->isEmpty()) {
-                throw new \Exception("Cart is empty");
+            if (! $cart || $cart->items->isEmpty()) {
+                throw new \Exception('Cart is empty');
             }
 
             $total = 0;
