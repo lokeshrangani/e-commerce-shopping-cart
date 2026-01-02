@@ -3,12 +3,10 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Collection;
 
 class DailySalesMail extends Mailable
 {
@@ -17,9 +15,9 @@ class DailySalesMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(public Collection $orders, public float $total, public int $orderCount, public string $date)
+    public function __construct(public string $downloadUrl, public float $total, public int $orderCount, public string $date)
     {
-        $this->orders = $orders;
+        $this->downloadUrl = $downloadUrl;
         $this->total = $total;
         $this->orderCount = $orderCount;
         $this->date = $date;
@@ -31,7 +29,7 @@ class DailySalesMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Daily Sales Mail - ' . $this->date,
+            subject: 'Daily Sales Mail - '.$this->date,
         );
     }
 

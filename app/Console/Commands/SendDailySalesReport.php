@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Mail\DailySalesMail;
-use App\Service\OrderService;
+use App\Service\DailySalesCsvService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
@@ -20,12 +20,12 @@ class SendDailySalesReport extends Command
             ? Carbon::parse($this->argument('date'))
             : now();
 
-        $orders = (new OrderService())->getOrdersByDate($date->toDateString());
+        $salesData = (new DailySalesCsvService)->prepareDailySalesData($date->toDateString());
 
         $adminEmail = config('app.admin_email', 'admin@test.com');
 
         Mail::to($adminEmail)->send(
-            new DailySalesMail($orders, $orders->sum('total_amount'), $orders->count(), $date->toDateString())
+            new DailySalesMail($salesData['downloadUrl'], $salesData['total'], $salesData['orderCount'], $date->toDateString())
         );
 
         $this->info('Daily sales report sent.');
