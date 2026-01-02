@@ -29,7 +29,7 @@
     </div>
 
     {{-- CART --}}
-    <div>
+    <div class="lg:sticky lg:top-10 self-start">
         <h2 class="text-2xl font-bold mb-4">Your Cart</h2>
 
         @if ($this->cart && $this->cart->items->count())
